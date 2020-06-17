@@ -65,34 +65,36 @@ def getQuota_linear(request):
                 n = int(request.POST.get('n'))
                 data = RMF.Paillier_HomAdd(ss, pf, a1, a2, c, n)
                 # print(RMF.Paillier_HomAdd(ss, pf, a1, a2, c, n))
-            elif operation == 2:  # HLP
+            elif operation == 2 or operation == 3:  # HLP
                 ss = eval(request.POST.get('ss'))
                 pf = eval(request.POST.get('pf'))
                 c = eval(request.POST.get('c'))
                 N = int(request.POST.get('N'))
                 mods = int(request.POST.get('mods'))
                 data = RMF.HLP_HomAdd(ss, pf, a1, a2, c, N, mods)
-            elif operation == 3:  # HLP_other
-                ss = eval(request.POST.get('ss'))
-                pf = eval(request.POST.get('pf'))
-                c = eval(request.POST.get('c'))
-                N = int(request.POST.get('N'))
-                mods = int(request.POST.get('mods'))
-                data = RMF.HLP_other_HomAdd(ss, pf, a1, a2, c, N, mods)
+            # elif operation == 3:  # HLP_other
+            #     ss = eval(request.POST.get('ss'))
+            #     pf = eval(request.POST.get('pf'))
+            #     c = eval(request.POST.get('c'))
+            #     N = int(request.POST.get('N'))
+            #     mods = int(request.POST.get('mods'))
+            #     data = RMF.HLP_other_HomAdd(ss, pf, a1, a2, c, N, mods)
             elif operation == 4:  # BFV
+                print("++++++++++")
+                print("被访问")
                 ss = request.POST.get('ss')
                 pf = request.POST.get('pf')
-                c = request.POST.get('c')
+                lastC = request.POST.get('lastC')
                 rel = request.POST.get('rel')
                 pub = request.POST.get('pub')
-                data = RMF.BFV_Hom(ss, pf, a1, a2, 0, c, rel, pub)
+                data = RMF.BFV_Hom(ss, pf, a1, a2, 0, lastC, rel, pub)
             elif operation == 5:  # CKKS
                 ss = request.POST.get('ss')
                 pf = request.POST.get('pf')
-                c = request.POST.get('c')
+                lastC = request.POST.get('lastC')
                 rel = request.POST.get('rel')
                 pub = request.POST.get('pub')
-                data = RMF.CKKS_Hom(ss, pf, a1, a2, c, rel, pub)
+                data = RMF.CKKS_Hom(ss, pf, a1, a2, lastC, rel, pub)
             # print(data)
         return JsonResponse({
             "status_code": 0,
@@ -109,30 +111,32 @@ def getQuota_multiple(request):
         # 判断是否传参
         if request.POST:
             operation = request.POST.get('operation')
-            functionId = request.POST.get('functionId')
+            rel = request.POST.get('rel')
+            pub = request.POST.get('pub')
             coefficientArray = request.POST.get('coefficientArray')
+            coefficientArray = eval(coefficientArray)
+            coefficientArray.append(1)
             powerArray = request.POST.get('powerArray')
+            powerArray = eval(powerArray)
             lastC = request.POST.get('lastC')
             ss = request.POST.get('ss')
             pf = request.POST.get('pf')
+            x_mul = request.POST.get('x_mul')
+            x = [ss, pf, x_mul]
             if operation == 4:  # BFV
-                ss = ss
+                data = RMF.HLP_HomAdd_More(x, coefficientArray, powerArray, lastC, 2, rel, pub)
+                print("++++++++++++")
             elif operation == 5:  # CKKS
-                pf = pf
-        # TODO
-
-
-def getQuota_multiple(request):
-    if request.method == 'POST':  # 当提交表单时
-        # 判断是否传参
-        if request.POST:
-            operation = request.POST.get('operation')
-            functionId = request.POST.get('functionId')
-            coefficientArray = eval(request.POST.get('coefficientArray'))
-            powerArray = eval(request.POST.get('powerArray'))
-            lastC = request.POST.get('lastC')
-            ss = request.POST.get('ss')
-            pf = request.POST.get('pf')
+                data = RMF.CKKS_HomAdd_More(x, coefficientArray, powerArray, lastC, 2, rel, pub)
+            print(data)
+        return JsonResponse({
+            "status_code": 0,
+            "data": data
+        })
+    return JsonResponse({
+        "status_code": 1,
+        "data": 'no send data'
+    })
 
 
 # /apis/get_info

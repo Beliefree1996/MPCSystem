@@ -169,6 +169,8 @@
       this.$axios.get('apis/user/getstatus?aa=60&kk=6')
         .then(response => {
           if (response.data.status === 0){
+            // console.log("++++++++++++++")
+            // console.log(response.data.id)
             this.userId = response.data.id
           }
           else if (response.data.status === 1) {

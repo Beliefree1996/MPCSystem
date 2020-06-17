@@ -25,7 +25,7 @@ from . import NCC_getongtai2N as HLP_other
 def renew_publicKey(request):
     # Key - Global variables
     enalth = En_Algorithm.objects.last()
-    if enalth.normal == 1 or enalth.plus == 1:  # paillier
+    if enalth.normal == 1 or enalth.operation == 1:  # paillier
         n, g, r, lamda, u = paillier.paillier_generation()
         puk1 = PaillierPublicKey.objects.get(id=1)
         puk1.n = n
@@ -35,7 +35,7 @@ def renew_publicKey(request):
         url = 'http://127.0.0.1:8000/apis/renew_Paillier_privateKey'
         data = {'g': g, 'lamda': lamda, 'n': n, 'u': u}
         requests.post(url, data=data)
-    if enalth.normal == 2 or enalth.plus == 2:  # HLP
+    if enalth.normal == 2 or enalth.operation == 2:  # HLP
         N, l, Mhard, Msoft, random_numbers, mods, Deta, A, B, q, ns, sigema_max, l_0, sigma, r = HLP.key_generartion()  # 密钥生成
         # puk2 = HLPPublicKey(N=N, ns=ns, mods=mods, Mhard=Mhard, Msoft=Msoft, random_numbers=random_numbers)
         puk2 = HLPPublicKey.objects.get(id=1)
@@ -49,7 +49,7 @@ def renew_publicKey(request):
         url = 'http://127.0.0.1:8000/apis/renew_HLP_privateKey'
         data = {'Deta': str(Deta), 'A': str(A), 'B': str(B), 'N': N, 'mods': mods, 'q': q}
         requests.post(url, data=data)
-    if enalth.normal == 3 or enalth.plus == 3:  # HLP_other
+    if enalth.normal == 3 or enalth.operation == 3:  # HLP_other
         N, l, Mhard, Msoft, random_numbers, mods, Deta, A, B, q, ns, sigema_max, l_0, sigma, r = HLP_other.key_generartion()  # 密钥生成
         # puk3 = HLP_otherPublicKey(N=N, ns=ns, mods=mods, Mhard=Mhard, Msoft=Msoft, random_numbers=random_numbers)
         puk3 = HLP_otherPublicKey.objects.get(id=1)
@@ -63,7 +63,7 @@ def renew_publicKey(request):
         url = 'http://127.0.0.1:8000/apis/renew_HLP_other_privateKey'
         data = {'Deta': str(Deta), 'A': str(A), 'B': str(B), 'N': N, 'mods': mods, 'q': q}
         requests.post(url, data=data)
-    if enalth.normal == 4 or enalth.multiply == 4:  # BFV
+    if enalth.normal == 4 or enalth.operation == 4:  # BFV
         url = 'http://39.102.39.63:9000/seal/BFV_kengen'
         data = requests.get(url)
         result = data.json()
@@ -76,7 +76,7 @@ def renew_publicKey(request):
         data1 = {'secret_key': result['secret_key']}
         requests.post(url1, data=data1)
         # print(requests.post(url1, data=data1).text)
-    if enalth.normal == 5 or enalth.multiply == 5:  # CKKS
+    if enalth.normal == 5 or enalth.operation == 5:  # CKKS
         url = 'http://39.102.39.63:9000/seal/CKKS_kengen'
         data = requests.get(url)
         result = data.json()
@@ -196,10 +196,10 @@ def getQuota(request):
         enalg = En_Algorithm.objects.last()
         if enalg.power == 1:
             functionT = Linear_Function.objects.get(id=enalg.functionId)
-            url = "http://127.0.0.1:8010/enter/getQuota_linear"
+            enter_url = "http://127.0.0.1:8010/enter/getQuota_linear"
             setdata = {'operation': enalg.operation,
                        'a1': functionT.a1, 'a2': functionT.a2, 'c': functionT.c,
-                       'ss': ss, 'pf': pf}
+                       'ss': int(ss), 'pf': int(pf)}
             # TODO 每一种情况数据得相应得加密
             if enalg.operation == 1:
                 puk = PaillierPublicKey.objects.get(id=1)
@@ -207,7 +207,7 @@ def getQuota(request):
                 setdata['ss'] = paillier.paillier_encryption(setdata['ss'], int(puk.n) + 1, int(puk.r), int(puk.n))
                 setdata['pf'] = paillier.paillier_encryption(setdata['pf'], int(puk.n) + 1, int(puk.r), int(puk.n))
                 setdata['c'] = paillier.paillier_encryption(setdata['c'], int(puk.n) + 1, int(puk.r), int(puk.n))
-            elif enalg.operation == 2:
+            elif enalg.operation == 2 or enalg.operation == 3:
                 puk = HLPPublicKey.objects.get(id=1)
                 setdata['N'] = puk.N
                 setdata['mods'] = puk.mods
@@ -220,26 +220,26 @@ def getQuota(request):
                 setdata['c'] = str(HLP.lattice_encryption(HLP.long_to_two(setdata['c'], puk.N), eval(puk.Mhard),
                                                       eval(puk.Msoft), eval(puk.random_numbers), puk.N, puk.ns,
                                                       puk.mods))
-            elif enalg.operation == 3:
-                puk = HLP_otherPublicKey.objects.get(id=1)
-                setdata['N'] = puk.N
-                setdata['mods'] = puk.mods
-                setdata['ss'] = str(HLP_other.lattice_encryption(HLP.long_to_two(setdata['ss'], puk.N), eval(puk.Mhard),
-                                                             eval(puk.Msoft), eval(puk.random_numbers), puk.N, puk.ns,
-                                                             puk.mods))
-                setdata['pf'] = str(HLP_other.lattice_encryption(HLP.long_to_two(setdata['pf'], puk.N), eval(puk.Mhard),
-                                                             eval(puk.Msoft), eval(puk.random_numbers), puk.N, puk.ns,
-                                                             puk.mods))
-                setdata['c'] = str(HLP_other.lattice_encryption(HLP.long_to_two(setdata['c'], puk.N), eval(puk.Mhard),
-                                                             eval(puk.Msoft), eval(puk.random_numbers), puk.N, puk.ns,
-                                                             puk.mods))
+            # elif enalg.operation == 3:
+            #     puk = HLP_otherPublicKey.objects.get(id=1)
+            #     setdata['N'] = puk.N
+            #     setdata['mods'] = puk.mods
+            #     setdata['ss'] = str(HLP_other.lattice_encryption(HLP.long_to_two(setdata['ss'], puk.N), eval(puk.Mhard),
+            #                                                  eval(puk.Msoft), eval(puk.random_numbers), puk.N, puk.ns,
+            #                                                  puk.mods))
+            #     setdata['pf'] = str(HLP_other.lattice_encryption(HLP.long_to_two(setdata['pf'], puk.N), eval(puk.Mhard),
+            #                                                  eval(puk.Msoft), eval(puk.random_numbers), puk.N, puk.ns,
+            #                                                  puk.mods))
+            #     setdata['c'] = str(HLP_other.lattice_encryption(HLP.long_to_two(setdata['c'], puk.N), eval(puk.Mhard),
+            #                                                  eval(puk.Msoft), eval(puk.random_numbers), puk.N, puk.ns,
+            #                                                  puk.mods))
             elif enalg.operation == 4:
                 url = 'http://39.102.39.63:9000/seal/BFV_Encrypt'
                 puk = SealBFVPublicKey.objects.get(id=1)
                 setdata['rel'] = puk.relin_keys
                 setdata['pub'] = puk.public_key
-                print("+++++++++++++")
-                print(json.loads(requests.post(url, data={'x': int(setdata['ss']), 'public_key': puk.public_key}).text))
+                # print("+++++++++++++")
+                # print(json.loads(requests.post(url, data={'x': int(setdata['ss']), 'public_key': puk.public_key}).text)['x_encrypted'])
                 setdata['ss'] = json.loads(requests.post(url, data={'x': int(setdata['ss']), 'public_key': puk.public_key}).text)['x_encrypted']
                 setdata['pf'] = json.loads(requests.post(url, data={'x': int(setdata['pf']), 'public_key': puk.public_key}).text)['x_encrypted']
                 setdata['c'] = json.loads(requests.post(url, data={'x': int(setdata['c']), 'public_key': puk.public_key}).text)['x_encrypted']
@@ -253,15 +253,50 @@ def getQuota(request):
                 setdata['c'] = json.loads(requests.post(url, data={'x': int(setdata['c']), 'public_key': puk.public_key}).text)['x_encrypted']
             # print("+++++++++++++")
             # print(requests.post(url, data=setdata).text)
-            data = json.loads(requests.post(url, data=setdata).text)['data']
+            data = json.loads(requests.post(enter_url, data=setdata).text)['data']
         elif enalg.power == 2:
             functionT = Multiple_Function.objects.get(id=enalg.functionId)
-            url = "http://127.0.0.1:8010/enter/getQuota_multiple"
-            setdata = {'operation': enalg.operation, 'functionId': enalg.functionId,
+            enter_url = "http://127.0.0.1:8010/enter/getQuota_multiple"
+            setdata = {'operation': enalg.operation,
                        'coefficientArray': functionT.coefficientArray,
                        'powerArray': functionT.powerArray, 'lastC': functionT.lastC,
                        'ss': ss, 'pf': pf}
-            # data = json.loads(requests.post(url, data=setdata).text)['data'],
+            if enalg.operation == 4:
+                url = 'http://39.102.39.63:9000/seal/BFV_Encrypt'
+                puk = SealBFVPublicKey.objects.get(id=1)
+                setdata['rel'] = puk.relin_keys
+                setdata['pub'] = puk.public_key
+                setdata['ss'] = \
+                json.loads(requests.post(url, data={'x': int(setdata['ss']), 'public_key': puk.public_key}).text)[
+                    'x_encrypted']
+                setdata['pf'] = \
+                json.loads(requests.post(url, data={'x': int(setdata['pf']), 'public_key': puk.public_key}).text)[
+                    'x_encrypted']
+                setdata['lastC'] = \
+                json.loads(requests.post(url, data={'x': int(setdata['lastC']), 'public_key': puk.public_key}).text)[
+                    'x_encrypted']
+                url = 'http://39.102.39.63:9000/seal/BFV_mul'
+                setdata['x_mul'] = json.loads(requests.post(url, data={'lis': str([setdata['ss'], setdata['pf']]), 'relin_keys': puk.relin_keys}).text)[
+                    'mul_encrypted']    # PyRunSeal与RMF参数不一样
+            elif enalg.operation == 5:
+                url = 'http://39.102.39.63:9000/seal/CKKS_Encrypt'
+                puk = SealCKKSPublicKey.objects.get(id=1)
+                setdata['rel'] = puk.relin_keys
+                setdata['pub'] = puk.public_key
+                setdata['ss'] = \
+                json.loads(requests.post(url, data={'x': int(setdata['ss']), 'public_key': puk.public_key}).text)[
+                    'x_encrypted']
+                setdata['pf'] = \
+                json.loads(requests.post(url, data={'x': int(setdata['pf']), 'public_key': puk.public_key}).text)[
+                    'x_encrypted']
+                setdata['lastC'] = \
+                json.loads(requests.post(url, data={'x': int(setdata['lastC']), 'public_key': puk.public_key}).text)[
+                    'x_encrypted']
+                url = 'http://39.102.39.63:9000/seal/CKKS_mul'
+                setdata['x_mul'] = json.loads(requests.post(url, data={'lis': str([setdata['ss'], setdata['pf']]),
+                                                                       'relin_keys': puk.relin_keys}).text)[
+                    'mul_encrypted']  # PyRunSeal与RMF参数不一样
+            data = json.loads(requests.post(enter_url, data=setdata).text)['data'],
     return JsonResponse({
         "status_code": 0,
         'enalg': enalg.operation,
