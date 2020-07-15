@@ -16,8 +16,8 @@ npm run build
 
 # Backend Django project run command
 client: python3 manage.py runserver 127.0.0.1:8000<br>
-enterprise: python3 manage.py runserver 127.0.0.1:8000<br>
-government: python3 manage.py runserver 127.0.0.1:8000
+enterprise: python3 manage.py runserver 127.0.0.1:8010<br>
+government: python3 manage.py runserver 127.0.0.1:8020
 
 # Test account
 Client user: guest<br>

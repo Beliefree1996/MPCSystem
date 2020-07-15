@@ -244,7 +244,7 @@ def get_info(request):
 
         # 获取公告列表
         if get_blog_list is not None and get_blog_list == "true":
-            db = Content.objects.all()
+            db = Content.objects.all().order_by("-id")
             data = [
                 {
                     "title": i.title,

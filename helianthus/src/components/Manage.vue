@@ -25,8 +25,9 @@
           <el-card style="margin-top:20px; margin-bottom: 20px">
             <el-form-item label="额度计算公式" prop="title" required>
               <el-select v-model="blog.title" placeholder="请选择" style="width: 680px">
-                <el-option label="2*ss + 10*pf + 10000" value=1></el-option>
+                <el-option label="2*ss^3 + 10*pf + 10000" value=1></el-option>
                 <el-option label="20*ss + 5*pf + 3000" value=2></el-option>
+                <el-option label="max(min(max(ss * 0.8，pf * 15) * 10，150000)，50000)" value=3></el-option>
               </el-select>
               <el-button type="text" @click="dialogFormVisible = true"><font size="2" color="blue">点击定制模型</font>
               </el-button>
@@ -124,7 +125,7 @@
                 <!--                </el-col>-->
                 <!--                <el-row>-->
                 <el-col :span="12">
-                  <el-form-item label="发布者" prop="author" required>
+                  <el-form-item label="设定者" prop="author" required>
                     <el-select v-model="blog.author" placeholder="请选择">
                       <el-option :value="users"></el-option>
                     </el-select>

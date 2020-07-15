@@ -1,12 +1,5 @@
 <template>
   <div class="Home">
-    <!--    <div align="right">-->
-    <!--      <div style="width: 300px">-->
-    <!--        <h1 style="text-align: right">每个人都有属于自己的一片森林，</h1>-->
-    <!--        <h1 style="text-align: right">迷失的人迷失了， </h1>-->
-    <!--        <h1 style="text-align: right">相逢的人会再相逢。</h1>-->
-    <!--      </div>-->
-    <!--    </div>-->
     <div style="height: 100%; width: 100%">
       <span class="demonstration"></span>
       <el-carousel height="386px">
@@ -21,22 +14,6 @@
       <br>
     </div>
     <el-row :gutter="10">
-      <!--      <el-col :xs="24" :xl="12" :lg="12" :sm="24" :md="12">-->
-      <!--        <el-card style="min-height: 200px; max-height: 400px; ">-->
-      <!--          <div slot="header">-->
-      <!--            <span v-show="playm">正在播放: {{ name }}</span>-->
-      <!--            <span v-show="!playm">点击下列音乐进行播放</span>-->
-      <!--          </div>-->
-      <!--          <audio :src="audio" autoplay loop></audio>-->
-      <!--          <div style="overflow: auto; height: 200px; width: 100%;">-->
-      <!--            <ul style="list-style: none">-->
-      <!--              <li v-for="m in mp3.data">-->
-      <!--                <el-link type="primany" @click="play(m.url, m.name)" style="margin: 10px">{{ m.name }}</el-link>-->
-      <!--              </li>-->
-      <!--            </ul>-->
-      <!--          </div>-->
-      <!--        </el-card>-->
-      <!--      </el-col>-->
       <el-col :xs="24" :xl="12" :lg="12" :sm="24" :md="12">
         <el-card style="min-height: 150px; max-height: 238px">
           <div slot="header">
@@ -50,10 +27,6 @@
               <span>{{dat.title}}</span>
               <span style="float: right">{{dat.time}}</span>
             </li>
-            <!--            <li style="font-size: 90%; margin-top: 5px">系统维护通知</li>-->
-            <!--            <li style="font-size: 90%; margin-top: 5px">央行再度“降息”</li>-->
-            <!--            <li style="font-size: 90%; margin-top: 5px">系统升级通知</li>-->
-            <!--            <li style="font-size: 90%; margin-top: 5px">放假通知</li>-->
           </div>
 
         </el-card>
@@ -169,8 +142,6 @@
       this.$axios.get('apis/user/getstatus?aa=60&kk=6')
         .then(response => {
           if (response.data.status === 0){
-            // console.log("++++++++++++++")
-            // console.log(response.data.id)
             this.userId = response.data.id
           }
           else if (response.data.status === 1) {

@@ -6,7 +6,7 @@
       <el-col :xs="24" :xl="12" :lg="12" :sm="24" :md="12">
         <el-card style="min-height: 100%; max-height: 800px; ">
           <div slot="header">
-            <span>近半年工资及社保变化</span>
+            <span>近半年公积金及社保变化</span>
           </div>
           <panel-group @handleSetLineChartData="handleSetLineChartData"/>
 
