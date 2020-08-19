@@ -1,77 +1,77 @@
 <template>
   <div class="AddBlog" v-show="isLogin" v-loading="loading">
-
-    <div style="height: 480px; width: 100%; background: white" v-show="loading" fade>
-    </div>
-
-    <el-form v-if="!issubmitd" :rules="rules" ref="blog" :model="blog" v-show="!loading" fade>
-
-      <el-form-item label="公告标题" prop="title" required>
-        <el-input type="text" v-model="blog.title" placeholder="公告标题" clearable></el-input>
-      </el-form-item>
-
-
-      <el-form-item label="公告内容" prop="content" required>
-        <el-input type="textarea" v-model="blog.content" placeholder="公告内容"
-                  :autosize="{ minRows: 8, maxRows: 20 }"></el-input>
-      </el-form-item>
-
-      <div class="form-group">
-        <!--        row分栏-->
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="类型" prop="cateory" required>
-              <el-select v-model="blog.cateory" placeholder="请选择">
-                <el-option v-for="cateory in cateorys" v-cloak :key="cateory" :value="cateory"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="发布者" prop="author" required>
-              <el-select v-model="blog.author" placeholder="请选择">
-                <el-option :value="users"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-        </el-row>
+    <div>
+      <div style="height: 480px; width: 100%; background: white" v-show="loading" fade>
       </div>
 
-      <div class="form-group">
-        <el-popover
-          placement="top"
-          width="160"
-          v-model="visible">
-          <p>确定提交么?</p>
-          <div style="text-align: right; margin: 0">
-            <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-            <el-button type="primary" size="mini" @click="submitform('blog')">确定</el-button>
-          </div>
-          <el-button slot="reference" type="primary">提交</el-button>
-        </el-popover>
-        <el-button type="primary" v-on:click="resetform" plain>重置</el-button>
+      <el-form v-if="!issubmitd" :rules="rules" ref="blog" :model="blog" v-show="!loading" fade>
+
+        <el-form-item label="公告标题" prop="title" required>
+          <el-input type="text" v-model="blog.title" placeholder="公告标题" clearable></el-input>
+        </el-form-item>
+
+        <el-form-item label="公告内容" prop="content" required>
+          <el-input type="textarea" v-model="blog.content" placeholder="公告内容"
+                    :autosize="{ minRows: 8, maxRows: 20 }"></el-input>
+        </el-form-item>
+
+        <div class="form-group">
+          <!--        row分栏-->
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="类型" prop="cateory" required>
+                <el-select v-model="blog.cateory" placeholder="请选择">
+                  <el-option v-for="cateory in cateorys" v-cloak :key="cateory" :value="cateory"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="12">
+              <el-form-item label="发布者" prop="author" required>
+                <el-select v-model="blog.author" placeholder="请选择">
+                  <el-option :value="users"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+
+          </el-row>
+        </div>
+
+        <div class="form-group">
+          <el-popover
+            placement="top"
+            width="160"
+            v-model="visible">
+            <p>确定提交么?</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+              <el-button type="primary" size="mini" @click="submitform('blog')">确定</el-button>
+            </div>
+            <el-button slot="reference" type="primary">提交</el-button>
+          </el-popover>
+          <el-button type="primary" v-on:click="resetform" plain>重置</el-button>
+        </div>
+      </el-form>
+
+      <div v-else>
+        <el-alert
+          title="发布成功"
+          type="success"
+          show-icon>
+        </el-alert>
+        <h1>大成功～</h1>
+        <h3>感谢你从本站付出的时间</h3>
+        <router-link to="/bloglist"><i class="el-icon-s-promotion"></i>返回</router-link>
       </div>
-    </el-form>
-
-    <div v-else>
-      <el-alert
-        title="发布成功"
-        type="success"
-        show-icon>
-      </el-alert>
-      <h1>大成功～</h1>
-      <h3>感谢你从本站付出的时间</h3>
-      <router-link to="/bloglist"><i class="el-icon-s-promotion"></i>返回</router-link>
     </div>
-
   </div>
+
 </template>
 
 <script>
   export default {
     name: 'AddBlog',
-    data () {
+    data() {
       return {
         // blog需要提交的数据
         blog: {
@@ -128,7 +128,7 @@
         }
       }
     },
-    created () {
+    created() {
       // 检测是否登录
       this.$axios.get('apis/user/getstatus?aa=60&kk=6')
         .then(response => {
@@ -163,4 +163,11 @@
   [v-cloak] {
     display: none;
   }
+
+  .wrap-banner {
+    position: absolute;
+    left: 50%;
+    margin-left: -251px;
+  }
+
 </style>

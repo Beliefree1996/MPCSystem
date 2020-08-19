@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 import axios from 'axios'
+import VueParticles from 'vue-particles'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css'
@@ -13,6 +14,7 @@ Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(ElementUI)
+Vue.use(VueParticles)
 // Vue.use(axios)
 
 /* eslint-disable no-new */

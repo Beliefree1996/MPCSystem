@@ -33,6 +33,7 @@
       </el-col>
 
       <el-col :xl="12" :lg="12" :sm="24" :md="12" class="hidden-sm-and-down">
+        <div v-if="isStaff === false">
         <el-card style="min-height: 200px; max-height: 300px; ">
           <div slot="header">
             <span>当前授权额度</span>
@@ -50,6 +51,10 @@
             </el-card>
           </el-row>
         </el-card>
+          </div>
+        <div v-if="isStaff === true">
+          <Status></Status>
+        </div>
       </el-col>
     </el-row>
 
@@ -66,7 +71,8 @@
     },
     data() {
       return {
-        userId: 12,
+        userId: 1,
+        isStaff: false,
         listLoading: true,
         playm: false,
         blogList: null,
@@ -87,6 +93,19 @@
         this.audio = url
         this.name = name
         this.playm = true
+      },
+      getUserInfo: function() {
+        this.$axios.get('apis/user/getstatus?aa=60&kk=6')
+        .then(response => {
+          if (response.data.status === 0){
+            this.userId = response.data.id
+            this.isStaff = response.data.is_staff
+            this.getQuota()
+          }
+          else if (response.data.status === 1) {
+            this.$router.push({path: '/user/login'})
+          }
+        })
       },
       getQuota: function () {
         // this.$axios.get('apis/getQuota?userId' + this.userId)
@@ -139,16 +158,9 @@
         .then(data => {
           this.mp3 = data
         })
-      this.$axios.get('apis/user/getstatus?aa=60&kk=6')
-        .then(response => {
-          if (response.data.status === 0){
-            this.userId = response.data.id
-          }
-          else if (response.data.status === 1) {
-            this.$router.push({path: '/user/login'})
-          }
-        })
-      this.getQuota()
+      // this.getQuota()
+      this.getUserInfo()
+
     }
   }
 </script>

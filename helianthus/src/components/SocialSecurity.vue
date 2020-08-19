@@ -2,49 +2,69 @@
   <div class="SocialSecurity">
     <div class="block">
     </div>
-    <el-row :gutter="10">
-      <el-col :xs="24" :xl="12" :lg="12" :sm="24" :md="12">
-        <el-card style="min-height: 100%; max-height: 800px; ">
-          <div slot="header">
-            <span>近半年公积金及社保变化</span>
-          </div>
-          <panel-group @handleSetLineChartData="handleSetLineChartData"/>
-
-          <el-row v-loading="listLoading" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-            <line-chart :chart-data="lineChartData"/>
-          </el-row>
-        </el-card>
-      </el-col>
-
-      <el-col :xl="12" :lg="12" :sm="24" :md="12" class="hidden-sm-and-down">
-        <Status></Status>
-        <el-card style="min-height: 200px; max-height: 300px; ">
-          <div slot="header">
-            <span>查询个人公积金月缴额及社保缴费基数</span>
-          </div>
-          <el-row>
-            <div class="block">
-              <span class="demonstration">请选择您要查询的月份</span>
-              <el-date-picker
-                v-model="choose_month"
-                type="month"
-                placeholder="选择年月"
-                format="yyyy 年 MM 月"
-                value-format="yyyyMM">>
-              </el-date-picker>
-              <el-button type="primary" size="medium" @click="inquiry()">确定</el-button>
-              <el-row>
-                <el-card style="margin-top:20px; margin-bottom: 20px">
-                  <span v-show="!show_wage"><i class="el-icon-warning-outline"></i> 未查询到相关数据</span>
-                  <span v-show="show_wage">您该月公积金月缴额为 {{this.wageItem}}，</span>
-                  <span v-show="show_wage">应缴社保缴费基数为 {{this.taxItem}}</span>
-                </el-card>
-              </el-row>
+    <div class="wrap-banner">
+      <el-row :gutter="10">
+        <el-col :xs="24" :xl="12" :lg="12" :sm="24" :md="12">
+          <el-card style="min-height: 100%; max-height: 800px; ">
+            <div slot="header">
+              <span>近半年公积金及社保额度变化</span>
             </div>
-          </el-row>
-        </el-card>
-      </el-col>
-    </el-row>
+            <panel-group @handleSetLineChartData="handleSetLineChartData"/>
+
+            <el-row v-loading="listLoading" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+              <line-chart :chart-data="lineChartData"/>
+            </el-row>
+          </el-card>
+        </el-col>
+
+        <el-col :xl="12" :lg="12" :sm="24" :md="12" class="hidden-sm-and-down">
+          <Status></Status>
+          <el-card style="min-height: 200px; max-height: 300px; ">
+            <div slot="header">
+              <span>查询个人公积金月缴额及社保缴费基数</span>
+            </div>
+            <el-row>
+              <div class="block">
+                <span class="demonstration">请选择您要查询的月份</span>
+                <el-date-picker
+                  v-model="choose_month"
+                  type="month"
+                  placeholder="选择年月"
+                  format="yyyy 年 MM 月"
+                  value-format="yyyyMM">>
+                </el-date-picker>
+                <el-button type="primary" size="medium" @click="inquiry()">确定</el-button>
+                <el-row>
+                  <el-card style="margin-top:20px; margin-bottom: 20px">
+                    <span v-show="!show_wage"><i class="el-icon-warning-outline"></i> 未查询到相关数据</span>
+                    <span v-show="show_wage">您该月公积金月缴额为 {{this.wageItem}}，</span>
+                    <span v-show="show_wage">应缴社保缴费基数为 {{this.taxItem}}</span>
+                  </el-card>
+                </el-row>
+              </div>
+            </el-row>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+
+    <vue-particles
+      color="#409EFF"
+      :particleOpacity="0.7"
+      :particlesNumber="80"
+      shapeType="circle"
+      :particleSize="4"
+      linesColor="#409EFF"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="3"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+    ></vue-particles>
 
     <el-dialog
       title="提示"
@@ -193,5 +213,11 @@
     background: #0b2e13;
     height: auto;
     width: auto;
+  }
+
+  .wrap-banner {
+    position: absolute;
+    left: 0;
+    right: 0;
   }
 </style>

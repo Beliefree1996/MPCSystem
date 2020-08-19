@@ -60,7 +60,7 @@
                 </el-tab-pane>
                 <el-tab-pane label="多次函数">
                   <el-form :model="formula">
-                    <h3>当前风控模型函数：{{ModelFunction}}</h3>
+                    <h3>当前风de控模型函数：{{ModelFunction}}</h3>
                     <br>
                     <el-form-item label="多项式项">
                       <el-input v-model="formula.a" size="mini" placeholder="系数" style="width: 56px"></el-input>

@@ -1,6 +1,29 @@
 <template>
-  <div id="Register">
-    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+  <div class="register-page">
+    <vue-particles
+      color="#ffffff"
+      :particleOpacity="0.7"
+      :particlesNumber="50"
+      shapeType="circle"
+      :particleSize="4"
+      linesColor="#dedede"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="2"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+    >
+    </vue-particles>
+    <div class="register-page-center">
+      <div class="register-page-content">
+        <div class="register-page-title">注册账号</div>
+<!--        <div id="Register" style="text-align:center">-->
+<!--    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" style="margin: 8% 24%">-->
+          <div :xs="24" :sm="24" :md="12" :lg="12" :xl="12" style="margin:5% 20%; padding-bottom: 16px">
       <el-form :model="FormData" status-icon ref="FormData" :rules="rules">
         <el-form-item label="用户名" prop="username">
           <el-input type="text" v-model="FormData.username" placeholder="请输入用户名"></el-input>
@@ -14,12 +37,16 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="FormData.email" placeholder="请输入邮箱"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item style="text-align:center">
           <el-button type="primary" @click="submitd('FormData')">提交</el-button>
           <el-button @click="resetForm('FormData')">重置</el-button>
         </el-form-item>
       </el-form>
-    </el-col>
+<!--          </div>-->
+<!--    </el-col>-->
+  </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -116,5 +143,56 @@
 </script>
 
 <style scoped>
+  .register-page {
+    font-size: 16px;
+    color: #fff;
+    background: url(../../assets/background.jpg) no-repeat;
+    min-height: 100%;
+  }
 
+  .register-page-center {
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
+  .register-page-title {
+    font-size: 40px;
+    padding-top: 10px;
+    text-align: center;
+    user-select: none;
+  }
+
+  .register-page-content {
+    background-color: rgba(46, 46, 46, .61);
+    border-radius: 10px;
+    box-shadow: 0 0 20px 0 #f0f8ff;
+  }
+
+  @-webkit-keyframes pulsate-bck {
+    0%, to {
+      -webkit-transform: scale(1);
+      transform: scale(1)
+    }
+    50% {
+      -webkit-transform: scale(.9);
+      transform: scale(.9)
+    }
+  }
+
+  @keyframes pulsate-bck {
+    0%, to {
+      -webkit-transform: scale(1);
+      transform: scale(1)
+    }
+    50% {
+      -webkit-transform: scale(.9);
+      transform: scale(.9)
+    }
+  }
 </style>

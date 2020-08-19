@@ -1,14 +1,18 @@
 <template>
   <div class="BlogList" v-loading="loading">
-    <el-card class="card-content" v-for="dat in blogList" :key="dat.title">
-      <div slot="header" class="card-header-text">
-        <span style="font-size: 18px; font-weight: bolder">{{ dat.title }}</span>
-        <div style="float: right; font-size: 5px"> {{ dat.time }} -- {{ dat.user }}</div>
+    <div class="wrap-banner">
+      <div >
+        <el-card class="card-content" v-for="dat in blogList" :key="dat.title">
+          <div slot="header" class="card-header-text">
+            <span style="font-size: 18px; font-weight: bolder">{{ dat.title }}</span>
+            <div style="float: right; font-size: 5px"> {{ dat.time }} -- {{ dat.user }}</div>
+          </div>
+          <div>
+            <span class="content-style">{{ dat.content }}</span>
+          </div>
+        </el-card>
       </div>
-      <div>
-        <span class="content-style">{{ dat.content }}</span>
-      </div>
-    </el-card>
+    </div>
     <!--页码条-->
     <el-col :span="24" class="toolbar" style="position: absolute; right: 100px; bottom: 60px">
       <el-pagination style="float:right;"
@@ -19,6 +23,23 @@
                      :total="totalPage">
       </el-pagination>
     </el-col>
+    <vue-particles
+        color="#409EFF"
+        :particleOpacity="0.7"
+        :particlesNumber="80"
+        shapeType="circle"
+        :particleSize="4"
+        linesColor="#409EFF"
+        :linesWidth="1"
+        :lineLinked="true"
+        :lineOpacity="0.4"
+        :linesDistance="150"
+        :moveSpeed="3"
+        :hoverEffect="true"
+        hoverMode="grab"
+        :clickEffect="true"
+        clickMode="push"
+      ></vue-particles>
   </div>
 </template>
 
@@ -60,6 +81,7 @@
 
 
 <style scoped>
+
   .card-content {
     min-width: 250px;
     max-width: 550px;
@@ -83,6 +105,12 @@
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
+  }
+
+  .wrap-banner {
+    position: absolute;
+    left: 50%;
+    margin-left: -251px;
   }
 
 </style>

@@ -1,6 +1,27 @@
 <template>
-    <div id="Login" v-loading="false" style="margin: 10% 0">
-        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+  <div class="login-page">
+    <vue-particles
+      color="#ffffff"
+      :particleOpacity="0.7"
+      :particlesNumber="50"
+      shapeType="circle"
+      :particleSize="4"
+      linesColor="#dedede"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="2"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+    >
+    </vue-particles>
+    <div class="login-page-center">
+      <div class="login-page-content">
+        <div class="login-page-title">系统登录</div>
+        <div :xs="24" :sm="24" :md="12" :lg="12" :xl="12" style="margin:5% 20%; padding-bottom: 16px">
           <el-form ref="FormDatas" :model="FormDatas" label-width="80px" :rules="rules">
             <el-form-item label="用户名" prop="username">
               <el-input type="text" v-model="FormDatas.username" autocomplete="off" placeholder="键入你的用户名"></el-input>
@@ -8,14 +29,16 @@
             <el-form-item label="密码" prop="password">
               <el-input type="password" v-model="FormDatas.password" autocomplete="off" placeholder="键入你的密码"></el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item style="text-align:center">
               <el-button type="primary" @click="submitd('FormDatas')">登录</el-button>
               &nbsp;&nbsp;没有帐号?
               <router-link to="/user/register">点我注册</router-link>
             </el-form-item>
           </el-form>
-        </el-col>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -69,5 +92,56 @@
 </script>
 
 <style scoped>
+  .login-page {
+    font-size: 16px;
+    color: #fff;
+    background: url(../../assets/background.jpg) no-repeat;
+    min-height: 100%;
+  }
 
+  .login-page-center {
+    width: 70%;
+    height: 50%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
+  .login-page-title {
+    font-size: 42px;
+    padding-top: 10px;
+    text-align: center;
+    user-select: none;
+  }
+
+  .login-page-content {
+    background-color: rgba(46, 46, 46, .61);
+    border-radius: 10px;
+    box-shadow: 0 0 20px 0 #f0f8ff;
+  }
+
+  @-webkit-keyframes pulsate-bck {
+    0%, to {
+      -webkit-transform: scale(1);
+      transform: scale(1)
+    }
+    50% {
+      -webkit-transform: scale(.9);
+      transform: scale(.9)
+    }
+  }
+
+  @keyframes pulsate-bck {
+    0%, to {
+      -webkit-transform: scale(1);
+      transform: scale(1)
+    }
+    50% {
+      -webkit-transform: scale(.9);
+      transform: scale(.9)
+    }
+  }
 </style>
