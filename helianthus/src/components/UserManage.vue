@@ -1,5 +1,6 @@
 <template>
   <div class="UserManage">
+    <div class="wrap-banner">
     <el-row>
       <h3></h3>
       <el-input v-model="input" placeholder="请输入用户名" style="width: 160px"></el-input>
@@ -44,6 +45,7 @@
       </el-table>
     </el-card>
     <!--页码条-->
+    </div>
     <el-col :span="24" class="toolbar" style="position: absolute; right: 100px; bottom: 60px">
       <el-pagination style="float:right;"
                      background
@@ -53,6 +55,23 @@
                      :total="totalPage">
       </el-pagination>
     </el-col>
+        <vue-particles
+        color="#409EFF"
+        :particleOpacity="0.7"
+        :particlesNumber="80"
+        shapeType="circle"
+        :particleSize="4"
+        linesColor="#409EFF"
+        :linesWidth="1"
+        :lineLinked="true"
+        :lineOpacity="0.4"
+        :linesDistance="150"
+        :moveSpeed="3"
+        :hoverEffect="true"
+        hoverMode="grab"
+        :clickEffect="true"
+        clickMode="push"
+      ></vue-particles>
   </div>
 </template>
 
@@ -146,3 +165,13 @@
     },
   }
 </script>
+
+<style scoped>
+    .wrap-banner {
+    position: absolute;
+      left: 30px;
+      right: 30px;
+    /*left: 50%;*/
+    /*margin-left: -520px;*/
+  }
+</style>

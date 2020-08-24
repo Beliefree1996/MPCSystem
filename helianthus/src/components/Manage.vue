@@ -5,19 +5,55 @@
     </div>
 
     <el-form v-if="!issubmitd" :rules="rules" ref="blog" :model="blog" v-show="!loading" fade>
-      <el-card style="min-height: 200px; max-height: 300px; ">
-        <div slot="header">
-          <span>更新密钥</span>
-        </div>
-        <el-row>
-          <el-card style="margin-top:20px; margin-bottom: 20px">
-            <el-button type="primary" @click="renewKey">点击更新</el-button>
-            <font size="2" color="red">建议定期更新！</font>
+      <el-row :gutter="10">
+        <el-col :span="12">
+          <el-card style="min-height: 200px; max-height: 300px; ">
+            <div slot="header">
+              <span>更新密钥</span>
+            </div>
+            <el-row>
+              <el-card style="margin-top:20px; margin-bottom: 20px">
+                <el-row>
+                  <el-button type="primary" @click="renewKey">点击更新</el-button>
+                </el-row>
+                <el-row>
+                  <font size="2" color="red">建议定期更新！</font>
+                </el-row>
+              </el-card>
+            </el-row>
           </el-card>
-        </el-row>
-      </el-card>
+        </el-col>
+        <el-col :span="12">
+          <el-card style="min-height: 200px; max-height: 300px; ">
+            <div slot="header">
+              <span> 联邦学习</span>
+            </div>
+            <el-row>
+              <el-card style="margin-top:20px; margin-bottom: 20px">
+                <el-row>
+                  <el-col :span="18">
+                    <el-upload
+                      class="upload-demo"
+                      action="https://jsonplaceholder.typicode.com/posts/"
+                      :on-preview="handlePreview"
+                      :on-remove="handleRemove"
+                      :before-remove="beforeRemove"
+                      multiple
+                      :limit="3"
+                      :on-exceed="handleExceed">
+                      <el-button type="primary" icon="el-icon-upload" @click="trainUpload">上传数据</el-button>
+                      <div slot="tip" class="el-upload__tip">只能上传Excel文件，且不超过2M</div>
+                    </el-upload>
+                  </el-col>
+                  <el-button type="success" @click="startTrain" :disabled=isTrain_disable>开始训练</el-button>
+                </el-row>
+              </el-card>
+            </el-row>
+          </el-card>
+        </el-col>
+      </el-row>
 
-      <el-card style="min-height: 200px; min-height: 400px; ">
+      <el-card style="min-height: 200px; min-height: 400px; margin-top: 10px">
         <div slot="header">
           <span>更换风控模型</span>
         </div>
@@ -32,6 +68,16 @@
               <el-button type="text" @click="dialogFormVisible = true"><font size="2" color="blue">点击定制模型</font>
               </el-button>
             </el-form-item>
+
+            <!--            训练结果弹窗-->
+            <el-dialog title="联邦学习训练结果" :visible.sync="dialogResultVisible">
+              <div v-loading="result_loading" element-loading-background="white">
+                <img src="../assets/result.png" style="width: 70%; height: 60%">
+              </div>
+              <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogResultVisible = false">确 定</el-button>
+  </span>
+            </el-dialog>
 
             <!--            自定义公式-->
             <el-dialog title="自定义风控模型函数" :visible.sync="dialogFormVisible">
@@ -77,7 +123,8 @@
                     </el-form-item>
                     <el-form-item label="分母">
                       <el-input v-model="MDivisor" size="mini" placeholder="分母" style="width: 66px"></el-input>
-                      <el-button size="mini" type="success" round style="margin-left: 10px" @click="addMDivisor">确认</el-button>
+                      <el-button size="mini" type="success" round style="margin-left: 10px" @click="addMDivisor">确认
+                      </el-button>
                     </el-form-item>
                   </el-form>
                   <br>
@@ -175,8 +222,11 @@
     data() {
       return {
         isAdd: false,
+        isTrain_disable: true,
+        result_loading: true,
         flag: 0,  // 判断是否是新增风控模型函数，0为常用下拉框选取，1为定制单次，2为定制多次
         dialogFormVisible: false,
+        dialogResultVisible: false,
         ModelFunction: '0',
         coefficientArray: [], // 系数
         powerArray: [], // 幂
@@ -348,6 +398,19 @@
         this.isAdd = true
         this.blog.cateory_operation = '4'
       },
+      trainUpload: function () {
+        this.isTrain_disable = false
+      },
+      startTrain: function () {
+        this.dialogResultVisible = true
+        this.result_loading = true
+        // setTimeout(function () {
+        //   this.result_loading = false;
+        // },3000)
+        setTimeout(() => {
+          this.result_loading = false
+        }, 8 * 1000)
+      }
     },
     created() {
       // 检测是否登录

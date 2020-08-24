@@ -30,9 +30,9 @@
               <el-input type="password" v-model="FormDatas.password" autocomplete="off" placeholder="键入你的密码"></el-input>
             </el-form-item>
             <el-form-item style="text-align:center">
-              <el-button type="primary" @click="submitd('FormDatas')">登录</el-button>
+              <el-button type="primary" @click="submitd('FormDatas')"><font size="4px">登录</font></el-button>
               &nbsp;&nbsp;没有帐号?
-              <router-link to="/user/register">点我注册</router-link>
+              <router-link to="/user/register" style="color: red">点我注册</router-link>
             </el-form-item>
           </el-form>
         </div>
@@ -91,11 +91,11 @@
   }
 </script>
 
-<style scoped>
+<style>
   .login-page {
     font-size: 16px;
     color: #fff;
-    background: url(../../assets/background.jpg) no-repeat;
+    background: url(../../assets/sky.jpg) no-repeat;
     min-height: 100%;
   }
 
@@ -121,6 +121,11 @@
     background-color: rgba(46, 46, 46, .61);
     border-radius: 10px;
     box-shadow: 0 0 20px 0 #f0f8ff;
+  }
+
+  .el-form-item__label {
+    color: white;
+    font-size: 16px;
   }
 
   @-webkit-keyframes pulsate-bck {

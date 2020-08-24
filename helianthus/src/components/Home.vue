@@ -52,7 +52,7 @@
           </el-row>
         </el-card>
           </div>
-        <div v-if="isStaff === true">
+        <div v-else>
           <Status></Status>
         </div>
       </el-col>
@@ -72,7 +72,7 @@
     data() {
       return {
         userId: 1,
-        isStaff: false,
+        isStaff: true,
         listLoading: true,
         playm: false,
         blogList: null,

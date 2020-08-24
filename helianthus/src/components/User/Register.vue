@@ -38,8 +38,8 @@
           <el-input v-model="FormData.email" placeholder="请输入邮箱"></el-input>
         </el-form-item>
         <el-form-item style="text-align:center">
-          <el-button type="primary" @click="submitd('FormData')">提交</el-button>
-          <el-button @click="resetForm('FormData')">重置</el-button>
+          <el-button type="primary" @click="submitd('FormData')"><font size="4px">提交</font></el-button>
+          <el-button @click="resetForm('FormData')"><font size="4px">重置</font></el-button>
         </el-form-item>
       </el-form>
 <!--          </div>-->

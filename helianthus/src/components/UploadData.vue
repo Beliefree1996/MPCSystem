@@ -4,7 +4,7 @@
       <el-button type="success" size="small" icon="el-icon-download">
         <a href="/apis/static/file/demo.xlsx" style="color: #fff;text-decoration: none">下载示例</a>
       </el-button>
-      , 由于网络原因，请耐心等待上传完毕.
+      , 由于网络原因，请耐心等待下载完毕.
     </h3>
     <el-upload
       class="upload-demo"
