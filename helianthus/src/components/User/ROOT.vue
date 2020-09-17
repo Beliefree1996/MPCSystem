@@ -63,6 +63,7 @@
           .then(response => {
             if (response.data.status_code === 0) {
               this.$message.success("认证成功！")
+              location.reload()
             } else {
               this.$message.error("网络错误，认证失败")
             }

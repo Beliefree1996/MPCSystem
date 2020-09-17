@@ -140,9 +140,9 @@
                 wageArr[i] = this.dataArr[i]['pf']
                 taxArr[i] = this.dataArr[i]['ss']
               }
-              lineChartData.socialSecurityData.xAxisData = [monthArr[0], monthArr[1], monthArr[2], monthArr[3], monthArr[4], monthArr[5]]
-              lineChartData.socialSecurityData.wageData = [wageArr[0], wageArr[1], wageArr[2], wageArr[3], wageArr[4], wageArr[5]]
-              lineChartData.socialSecurityData.taxData = [taxArr[0], taxArr[1], taxArr[2], taxArr[3], taxArr[4], taxArr[5]]
+              lineChartData.socialSecurityData.xAxisData = [monthArr[5], monthArr[4], monthArr[3], monthArr[2], monthArr[1], monthArr[0]]
+              lineChartData.socialSecurityData.wageData = [wageArr[5], wageArr[4], wageArr[3], wageArr[2], wageArr[1], wageArr[0]]
+              lineChartData.socialSecurityData.taxData = [taxArr[5], taxArr[4], taxArr[3], taxArr[2], taxArr[1], taxArr[0]]
             } else {
               this.$message.error("未查询到您的信息！")
             }

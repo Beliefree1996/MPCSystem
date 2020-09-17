@@ -109,8 +109,10 @@
 
   .wrap-banner {
     position: absolute;
-    left: 50%;
-    margin-left: -251px;
+    /*left: 50%;*/
+    /*margin-left: -251px;*/
+    left:0;
+    right: 0;
   }
 
 </style>

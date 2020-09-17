@@ -42,7 +42,7 @@
                       :limit="3"
                       :on-exceed="handleExceed">
                       <el-button type="primary" icon="el-icon-upload" @click="trainUpload">上传数据</el-button>
-                      <div slot="tip" class="el-upload__tip">只能上传Excel文件，且不超过2M</div>
+                      <div slot="tip" class="el-upload__tip">只能上传Excel/CSV文件，且不超过2M</div>
                     </el-upload>
                   </el-col>
                   <el-button type="success" @click="startTrain" :disabled=isTrain_disable>开始训练</el-button>
@@ -73,6 +73,16 @@
             <el-dialog title="联邦学习训练结果" :visible.sync="dialogResultVisible">
               <div v-loading="result_loading" element-loading-background="white">
                 <img src="../assets/result.png" style="width: 70%; height: 60%">
+                <div style="margin-right: 10px">
+                  L = 1.02824158
+w1 = -6.40531007
+w2 = 634.590094
+w3 = 5.69205746
+x01 = 0.481440154
+x02 = 0.0126577103
+x03 = 0.377919248
+b = 0.0550714959
+                </div>
               </div>
               <span slot="footer" class="dialog-footer">
     <el-button type="primary" @click="dialogResultVisible = false">确 定</el-button>
